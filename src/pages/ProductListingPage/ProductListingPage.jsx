@@ -17,7 +17,9 @@ function ProductListingPage() {
   const observer = useRef(null);
   const loadMoreRef = useRef(null);
   useEffect(() => {
-    dispatch(fetchPokemonData());
+    if (pokemonDetails?.pokemonList.length === 0) {
+      dispatch(fetchPokemonData());
+    }
   }, [dispatch]);
 
   useEffect(() => {

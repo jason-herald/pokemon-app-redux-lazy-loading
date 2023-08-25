@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route exact path="/" element={<ProductListingPage />} />
         <Route
-          path="/pokemon/:pokemonName"
+          path="/pokemon/:pokemonID"
           element={<ProductDescriptionPage />}
         />
       </Routes>

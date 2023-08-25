@@ -2,15 +2,19 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { IMAGE_URL } from "../../constants/constants";
-import { fetchPokemonData } from "../../store/pokemonActions";
+import {
+  fetchMorePokemonData,
+  fetchPokemonData,
+} from "../../store/pokemonActions";
 
 import "./ProductDescriptionPage.css";
 
+const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+
 function ProductDescriptionPage() {
   const pokemonDetails = useSelector((state) => state.pokemonList);
-  const { pokemonName } = useParams();
-
+  const { pokemonID } = useParams();
+  console.log(pokemonID);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,9 +23,9 @@ function ProductDescriptionPage() {
       // API is called here to add data to store if page is reloaded
     }
   }, [dispatch]);
-  const pokemon = pokemonDetails.pokemonList?.find(
-    (pokemon) => pokemon.name === pokemonName
-  )?.details;
+  const pokemonIndex = pokemonID - 1;
+  const pokemon = pokemonDetails.pokemonList[pokemonIndex]?.details;
+  console.log(pokemon);
 
   return (
     <div className="product-description-container">
@@ -38,7 +42,7 @@ function ProductDescriptionPage() {
           <p className="pokemon-property">Weight: {pokemon.weight}</p>
           <p className="pokemon-property">Abilities:</p>
           <ul className="abilities-list">
-            {pokemon.abilities.map((ability) => (
+            {pokemon.abilities?.map((ability) => (
               <li className="ability-item" key={ability.ability.name}>
                 {ability.ability.name}
               </li>
